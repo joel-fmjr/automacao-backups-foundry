@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "automacao-backups-foundry"
+name = "foundry-backup-automation"
 version = "0.1.0"
 description = ""
 authors = ["Joel Júnior <joel.j@escolar.ifrn.edu.br>"]
 readme = "README.md"
-packages = [{include = "automacao_backups_foundry"}]
+packages = [{include = "foundry_backup_automation"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
