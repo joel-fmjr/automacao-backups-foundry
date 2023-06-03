@@ -3,15 +3,15 @@ import os
 
 import paramiko
 from dotenv import load_dotenv
+from datetime import date
 
-
-def connect_to_server(key_path, hostname, port, username):
+def connect_to_server(key_path, server_ip, port, username):
     """
     Establishes an SSH connection to the remote server using the provided credentials.
 
     Args:
         key_path (str): Path to the private key file.
-        hostname (str): Remote server hostname or IP address.
+        server_ip (str): Remote server server_ip or IP address.
         port (int): SSH port number.
         username (str): SSH username.
 
@@ -22,7 +22,7 @@ def connect_to_server(key_path, hostname, port, username):
     session.load_system_host_keys()
     session.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     private_key = paramiko.RSAKey.from_private_key_file(key_path)
-    session.connect(hostname, port, username, pkey=private_key)
+    session.connect(server_ip, port, username, pkey=private_key)
     return session
 
 
@@ -76,18 +76,21 @@ def delete_zip_and_close(session, remote_zip_filename):
 
 
 def main(args):
-    load_dotenv(dotenv_path=args.config_file)
+    load_dotenv(dotenv_path=args.args_file)
+    hoje = date.today()
 
     key_path = os.getenv('KEY_PATH')
-    hostname = os.getenv('HOSTNAME')
+    server_ip = os.getenv('SERVER_IP')
     port = int(os.getenv('PORT'))
     username = os.getenv('REMOTE_USERNAME')
     remote_directory = os.getenv('REMOTE_DIRECTORY')
     remote_zip_filename = os.getenv('REMOTE_ZIP_FILE_NAME')
+    remote_zip_filename = f'{remote_zip_filename}_{hoje.strftime("%d_%m_%Y")}.zip'
     save_download_directory = os.getenv('SAVE_DOWNLOAD_DIRECTORY')
     local_zip_filename = os.getenv('LOCAL_ZIP_FILE_NAME')
+    local_zip_filename = f'{local_zip_filename}_{hoje.strftime("%d_%m_%Y")}.zip'
 
-    session = connect_to_server(key_path, hostname, port, username)
+    session = connect_to_server(key_path, server_ip, port, username)
     try:
         zip_folder(session, remote_directory, remote_zip_filename)
         download_zip_folder(
@@ -102,7 +105,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Backup Foundry CLI')
-    parser.add_argument('config_file', help='Path to the configuration file')
+    parser.add_argument('args_file', help='Path to the configuration file')
     args = parser.parse_args()
 
     main(args)
