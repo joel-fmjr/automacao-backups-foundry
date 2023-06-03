@@ -10,6 +10,7 @@ packages = [{include = "automacao_backups_foundry"}]
 python = "^3.10"
 paramiko = "^3.2.0"
 python-decouple = "^3.8"
+python-dotenv = "^1.0.0"
 
 
 [tool.poetry.group.test.dependencies]
