@@ -73,3 +73,36 @@ def delete_zip_and_close(session, remote_zip_filename):
     """
     session.exec_command(f'rm {remote_zip_filename}')
     session.close()
+
+
+def main(args):
+    load_dotenv(dotenv_path=args.config_file)
+
+    key_path = os.getenv('KEY_PATH')
+    hostname = os.getenv('HOSTNAME')
+    port = int(os.getenv('PORT'))
+    username = os.getenv('REMOTE_USERNAME')
+    remote_directory = os.getenv('REMOTE_DIRECTORY')
+    remote_zip_filename = os.getenv('REMOTE_ZIP_FILE_NAME')
+    save_download_directory = os.getenv('SAVE_DOWNLOAD_DIRECTORY')
+    local_zip_filename = os.getenv('LOCAL_ZIP_FILE_NAME')
+
+    session = connect_to_server(key_path, hostname, port, username)
+    try:
+        zip_folder(session, remote_directory, remote_zip_filename)
+        download_zip_folder(
+            session,
+            remote_zip_filename,
+            save_download_directory,
+            local_zip_filename,
+        )
+    finally:
+        delete_zip_and_close(session, remote_zip_filename)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Backup Foundry CLI')
+    parser.add_argument('config_file', help='Path to the configuration file')
+    args = parser.parse_args()
+
+    main(args)
