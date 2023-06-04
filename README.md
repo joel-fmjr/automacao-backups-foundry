@@ -13,7 +13,7 @@ This script automates the backup process for the Foundry application by performi
 
 ## Configuration
 
-1. Create a virtual environment (optional but recommended):
+1. Create a virtual environment:
    ```shell
    python -m venv venv
    source venv/bin/activate
@@ -28,7 +28,7 @@ This script automates the backup process for the Foundry application by performi
 ## Usage
 To manually run the script, use the following commands:
 
-1. Activate the virtual environment (if you created one):
+1. Activate the virtual environment:
     ```shell
     source venv/bin/activate
     ```
@@ -48,6 +48,6 @@ To schedule the script using cron or any other task scheduler, you can follow th
 
 2. Add an entry to the cron table to run the script at the desired schedule. For example, to run the script daily at 08:00 AM, you can add the following line:
     ```shell
-    00 08 * * * . /path/to/venv/bin/activate && python /path/to/repo/foundry_backup_automation/main.py /path/to/config.env>
+    00 08 * * * . /path/to/venv/bin/activate && python /path/to/repo/foundry_backup_automation/main.py /path/to/config.env
     ```
     Make sure to adjust the paths to the Python interpreter, main script, configuration file, and log file based on your setup.
