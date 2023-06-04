@@ -1,6 +1,6 @@
 # Foundry Backup Automation
 
-This script automates the backup process for the Foundry application by performing the following steps:
+This script automates the backup process for the Foundry application hosted in a oracle VM by performing the following steps:
 
 1. Connects to a remote server via SSH using the provided credentials.
 2. Zips a specified remote directory on the server.
