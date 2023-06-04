@@ -9,9 +9,7 @@ This script automates the backup process for the Foundry application by performi
 
 ## Prerequisites
 
-- Python 3.6 or higher
-- `paramiko` library: You can install it using `pip install paramiko`
-- `python-dotenv` library: You can install it using `pip install python-dotenv`
+- Python 3.10 or higher
 
 ## Configuration
 
