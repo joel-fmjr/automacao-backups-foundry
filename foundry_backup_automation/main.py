@@ -1,9 +1,10 @@
 import argparse
 import os
+from datetime import date
 
 import paramiko
 from dotenv import load_dotenv
-from datetime import date
+
 
 def connect_to_server(key_path, server_ip, port, username):
     """
@@ -85,10 +86,14 @@ def main(args):
     username = os.getenv('REMOTE_USERNAME')
     remote_directory = os.getenv('REMOTE_DIRECTORY')
     remote_zip_filename = os.getenv('REMOTE_ZIP_FILE_NAME')
-    remote_zip_filename = f'{remote_zip_filename}_{hoje.strftime("%d_%m_%Y")}.zip'
+    remote_zip_filename = (
+        f'{remote_zip_filename}_{hoje.strftime("%d_%m_%Y")}.zip'
+    )
     save_download_directory = os.getenv('SAVE_DOWNLOAD_DIRECTORY')
     local_zip_filename = os.getenv('LOCAL_ZIP_FILE_NAME')
-    local_zip_filename = f'{local_zip_filename}_{hoje.strftime("%d_%m_%Y")}.zip'
+    local_zip_filename = (
+        f'{local_zip_filename}_{hoje.strftime("%d_%m_%Y")}.zip'
+    )
 
     session = connect_to_server(key_path, server_ip, port, username)
     try:
